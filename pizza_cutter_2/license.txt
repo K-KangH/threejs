@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pizza Cutter 2
+* source:	https://sketchfab.com/3d-models/pizza-cutter-2-34d50973b3114afb8068e58d4bb1c7d2
+* author:	@voyager.artistry (https://sketchfab.com/Tufail321)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pizza Cutter 2" (https://sketchfab.com/3d-models/pizza-cutter-2-34d50973b3114afb8068e58d4bb1c7d2) by @voyager.artistry (https://sketchfab.com/Tufail321) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
