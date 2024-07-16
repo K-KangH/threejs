@@ -44,9 +44,12 @@
             controls.dampingFactor = 0.25;
 
             let loader = new GLTFLoader();
-            loader.load('pizza_cutter_2/scene.gltf', function (gltf) {
+            loader.load('tester/tester.gltf', function (gltf) {
                 let model = gltf.scene;
                 scene.add(model);
+
+                let axesHelper = new THREE.AxesHelper(50); // 길이 5인 축 보조 객체 생성
+                scene.add(axesHelper);
 
                 scene.background = new THREE.Color('black');
 
@@ -57,12 +60,24 @@
                 dirLight.position.set(0, 5, 5);
                 scene.add(dirLight);
 
+                // Initialize variables for animation
+                let clock = new THREE.Clock();
+
                 function animate() {
                     requestAnimationFrame(animate);
+
+                    // Calculate delta time (dt)
+                    let deltaTime = clock.getDelta();
+
+                    // Update animation here
+
+                    model.rotation.y += 1.0 * deltaTime;
+
                     controls.update();
                     renderer.render(scene, camera);
                 }
-                animate();
+
+                animate(); // Start the animation loop
             });
         </script>
     </body>
