@@ -18,32 +18,64 @@ function onYouTubeIframeAPIReady() {
             disablekb: 1,
             fs: 0,
             loop: 1,
-            playlist: WqNBIkFOoE4,
+            videoId: 'WqNBIkFOoE4',
         },
     });
 }
 
-// 4. The API will call this function when the video player is ready.
-// 재생준비가 완료되면 재생
-// function onPlayerReady(event) {
-//     event.target.playVideo();
-// }
+//4. The API will call this function when the video player is ready.
+//재생준비가 완료되면 재생
+function onPlayerReady(event) {
+    const observer = new IntersectionObserver(
+        (entries, observer) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.2) {
+                    console.log('Player is 20% visible, starting video.');
+                    event.target.playVideo(); // 동영상 재생
+                } else {
+                    console.log('Player is less than 20% visible, stopping video.');
+                    event.target.pauseVideo(); // 동영상 일시 정지
+                }
+            });
+        },
+        {
+            threshold: [0.5], // 20% 이상의 가시성 비율을 설정
+        }
+    );
 
-// 5. The API calls this function when the player's state changes.
-//    The function indicates that when playing a video (state=1),
-//    the player should play for six seconds and then stop.
-
-var play = false;
-function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING && !done) {
-        setTimeout(stopVideo, 6000);
-        done = true;
-    }
+    const target = document.querySelector('player');
+    observer.observe(target);
 }
 
+var isVisible = false;
+
+$(window).on('scroll', function () {
+    if (checkVisible($('.youtube')) && !isVisible) {
+        console.log('Visible!!!');
+        isVisible = true;
+        playVideo();
+    } else if (!checkVisible($('.youtube')) && isVisible) {
+        console.log('hidden!!!');
+        isVisible = false;
+        stopVideo();
+    }
+});
+
 function playVideo() {
-    youtubePlayer.playVideo(); //재생
+    player.playVideo(); //재생
 }
 function stopVideo() {
     player.stopVideo(); //일시정지
+}
+
+//체크할 element(ex:div span.. 등등)들이 브라우저에 나타날때를 체크하는 함수
+function checkVisible(elm, eval) {
+    eval = eval || 'object visible';
+    var viewportHeight = $(window).height(), // Viewport Height
+        scrolltop = $(window).scrollTop(), // Scroll Top
+        y = $(elm).offset().top,
+        elementHeight = $(elm).height();
+
+    if (eval == 'object visible') return y < viewportHeight + scrolltop && y > scrolltop - elementHeight;
+    if (eval == 'above') return y < viewportHeight + scrolltop;
 }
