@@ -15,8 +15,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overscroll-behavior: none;
         }
-        .video {
+        .video-container {
             position: relative;
             width: 100%;
             padding-bottom: 56.25%; /* 16:9 비율을 유지하기 위한 높이 설정 */
@@ -40,10 +41,9 @@
             id="id"
             class="spacer"
         ></div>
-        <div
-            class="video-container"
-            id="player"
-        ></div>
+        <div class="video-container">
+            <div id="player"></div>
+        </div>
         <div
             id="id"
             class="spacer"
