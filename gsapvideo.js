@@ -1,3 +1,5 @@
+gsap.registerPlugin(ScrollTrigger);
+
 let player;
 
 // YouTube 플레이어 API 로드 후 호출될 콜백 함수
@@ -23,10 +25,32 @@ function onYouTubeIframeAPIReady() {
 // YouTube 플레이어 준비 완료 시 호출될 콜백 함수
 function onPlayerReady(event) {
     console.log('YouTube Player Ready');
-
-    // YouTube 플레이어에 포커스 이벤트 리스너 추가
-    const playerElement = document.getElementById('player');
-    playerElement.addEventListener('focusin', function () {
-        player.playVideo();
-    });
 }
+ScrollTrigger.create({
+    start: 0,
+    end: 'max',
+    onUpdate: Isvideovisible,
+});
+let yt = document.querySelector('.video-container');
+//스크롤이 작동할때마다 실행될 함수
+function Isvideovisible() {
+    if (
+        ScrollTrigger.positionInViewport(yt, 'center').toFixed(2) < 1 &&
+        ScrollTrigger.positionInViewport(yt, 'center').toFixed(2) > 0.3
+    ) {
+        //console.log(ScrollTrigger.isInViewport(yt));
+        console.log(ScrollTrigger.positionInViewport(yt, 'center').toFixed(2));
+        player.mute();
+        player.playVideo();
+    } else {
+        //console.log(ScrollTrigger.isInViewport(yt));
+        console.log(ScrollTrigger.positionInViewport(yt, 'center').toFixed(2));
+        player.pauseVideo();
+    }
+}
+Isvideovisible();
+// function Isvideovisible() {
+//     player.mute();
+//     player.playVideo();
+//     console.log('nowscrolling');
+// }
