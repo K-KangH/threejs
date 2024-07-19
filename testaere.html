@@ -43,41 +43,46 @@
             controls.enableDamping = true;
             controls.dampingFactor = 0.25;
 
-            let loader = new GLTFLoader();
-            loader.load('tester/tester.gltf', function (gltf) {
-                let model = gltf.scene;
-                scene.add(model);
+            let rgbeLoader = new RGBELoader();
+            rgbeLoader.load('hdr/photo_studio_01_1k.hdr', function (texture) {
+                scene.background = texture;
+                scene.environment = texture;
+                let gltfLoader = new GLTFLoader();
+                gltfLoader.load('tester/tester.gltf', function (gltf) {
+                    let model = gltf.scene;
+                    scene.add(model);
 
-                let axesHelper = new THREE.AxesHelper(50); // 길이 5인 축 보조 객체 생성
-                scene.add(axesHelper);
+                    let axesHelper = new THREE.AxesHelper(50); // 길이 5인 축 보조 객체 생성
+                    scene.add(axesHelper);
 
-                scene.background = new THREE.Color(0xdeb887);
-                // 간접조명
-                let ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-                scene.add(ambientLight);
-                // 직접조명
-                let dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
-                dirLight.position.set(0, 0, 5);
-                scene.add(dirLight);
+                    scene.background = new THREE.Color('black');
+                    // 간접조명
+                    let ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                    scene.add(ambientLight);
+                    // 직접조명
+                    let dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
+                    dirLight.position.set(0, 5, 5);
+                    scene.add(dirLight);
 
-                // Initialize variables for animation
-                let clock = new THREE.Clock();
+                    // Initialize variables for animation
+                    let clock = new THREE.Clock();
 
-                function animate() {
-                    requestAnimationFrame(animate);
+                    function animate() {
+                        requestAnimationFrame(animate);
 
-                    // Calculate delta time (dt)
-                    let deltaTime = clock.getDelta();
+                        // Calculate delta time (dt)
+                        let deltaTime = clock.getDelta();
 
-                    // Update animation here
+                        // Update animation here
 
-                    model.rotation.y += 1.0 * deltaTime;
+                        model.rotation.y += 1.0 * deltaTime;
 
-                    controls.update();
-                    renderer.render(scene, camera);
-                }
+                        controls.update();
+                        renderer.render(scene, camera);
+                    }
 
-                animate(); // Start the animation loop
+                    animate(); // Start the animation loop
+                });
             });
         </script>
     </body>
